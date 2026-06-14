@@ -23,7 +23,7 @@ Despliegue tienda-perritos en EKS (namespace 'tienda')
    kubectl get pods -n tienda
    kubectl get svc tienda-frontend -n tienda
 
-Copias el EXTERNAL-IP (DNS del ELB) â†’ lo abres en el navegadorâ†’ deberÃ­as ver la pÃ¡gina de Tienda de Perritos í ½í°¶
+Copias el EXTERNAL-IP (DNS del ELB) â†’ lo abres en el navegadorâ†’ deberÃ­as ver la pÃ¡gina de Tienda de Perritos ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 Nota: Si te da error, y sale el pod con estado Pending (valida correctamente la configuraciÃ³n de la Actividad 1 â€“ paso 4).
 
