@@ -1,0 +1,56 @@
+version: "3.8"
+ 
+services:
+  tienda-db:
+    build: ./db
+    container_name: tienda-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: tienda_perritos
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata_tienda:/var/lib/mysql
+    networks:
+      - tienda_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+ 
+  tienda-backend:
+    build: ./backend
+    container_name: tienda-backend
+    restart: always
+    environment:
+      DB_HOST: tienda-db
+      DB_USER: root
+      DB_PASSWORD: admin123
+      DB_NAME: tienda_perritos
+      DB_PORT: 3306
+    ports:
+      - "3001:3001"
+    depends_on:
+      tienda-db:
+        condition: service_healthy
+    networks:
+      - tienda_net
+ 
+  tienda-frontend:
+    build: ./frontend
+    container_name: tienda-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - tienda-backend
+    networks:
+      - tienda_net
+ 
+volumes:
+  dbdata_tienda:
+ 
+networks:
+  tienda_net:
+    driver: bridge
